@@ -26,7 +26,6 @@ app.post('/room',(req,res) => {
     res.redirect('/'+ req.body.room);
 })
 
-
 app.get('/:room',(req , res) => {
     // if the requested room is not in the server
     // creating the room from that request and after that we render that
@@ -39,30 +38,54 @@ app.get('/:room',(req , res) => {
     res.render('room',{ roomName : req.params.room})
 })
 
-
 server.listen(3000);
-
-
 
 // for connecting the sockets to the server
 io.on('connection' , socket => {
 
     // if a new user is created we are cnnecting to that room
     socket.on('new-user',(room, name) => {
-        socket.join(room);
-        rooms[room].users[socket.id] = name;
-        rooms[room].len +=1 ;
-        socket.to(room).broadcast.emit('user-connected',name);
+        
+        if(rooms[room] === undefined){
+            //console.log(room);
+            return;
+            
+        }else{
+            socket.join(room);
+            if(socket.id != undefined){
+                
+                
+
+                if(rooms[room] != {}){
+                    let usersList = '';
+                    for(let socketid in rooms[room].users){
+                        usersList += `${ rooms[room].users[socketid]} ,`;
+                    }
+                    if(usersList.trim() === ''){
+                        socket.emit('users-online-list','No users yet.')
+                    }else{
+                        socket.emit('users-online-list',usersList);
+                    }
+                }
+                rooms[room].users[socket.id] = name;
+                rooms[room].len +=1 ;
+
+                socket.to(room).broadcast.emit('user-connected',name);
+
+            }else{
+                res.redirect('/'+ room);
+            }
+        }
     });
 
     // sending the message from a user of a room to entire users of 
     // that room
     socket.on('send-chat-message',(room ,message) =>{
-        //console.log(rooms[room].len)
-        //if(rooms[room].count > 1){
+        
+            if(rooms[room] === undefined){
+                return;
+            }
         socket.to(room).broadcast.emit('chat-message',{message:message , name: rooms[room].users[socket.id]})
-   //     }
-    
     });
 
     // if user is diconnected from a room

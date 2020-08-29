@@ -3,17 +3,81 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Page Title</title>
+    <title>Invisible chat application</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
     <script defer src="http://localhost:3000/socket.io/socket.io.js"></script>
     <script defer src="script.js"></script>
-    
+    <style>
+        * {
+            margin:0;
+            padding:0;
+        }
+
+        body {
+            
+            padding: 0;
+            margin: 30;
+            display: flex;
+            justify-content: center;
+            background-color:white;
+            
+        }
+        .container{
+            margin:120px;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            flex-direction:column;
+        }
+
+        .neu{
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            flex-direction:column;
+            height: 400px;
+            width:400px;
+            background:#dde1e7;;
+            border-radius:25px;
+            box-shadow: -4px -4px 5px #ffffff70, 3px 3px 15px #00000090 ;
+        }
+        .give{
+            font-family: Arial, Helvetica, sans-serif;
+            margin:20px;
+            border: 20px;
+        flex: 1; 
+        color:black;
+        font-size: 17pt;
+        
+        height: 42px;
+        width : 300px;
+        border-radius: 10%;
+        border-color: black;
+        background:#dde1e7;;
+            border-radius:5%;
+            box-shadow: -4px -4px 5px #ffffff70, 3px 3px 10px #00000090;
+        }
+        
+    </style>
 </head>
 <body>
-    <form action="/room" method="POST">
-    <input name="room" type="text" placeholder="enter room Name" required>
-    <button type="submit" > submit</button>
-    </form>
+    <div class="container">
+        <div class="neu">
+            <form  name="myForm" action="/room"   method="POST">
+                <div style="align-content: center;">
+                    <p style="padding-left:20% ,align-content:center "> <h1>Room Name</h1> </p>
+                </div>  
+
+                <div >
+                    <input   pattern="[A-Za-z0-9]{1,15}" class ="give"  name="room" type="text" placeholder="only alphanum len < 15"  >
+                </div>
+                
+                <div>
+                    <button   class ="give"  type="submit" > submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
