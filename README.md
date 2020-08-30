@@ -12,11 +12,11 @@ type this url
 ```sh
 localhost:3000
 ```
-![roomInterface](./pics/firstPerson.png)
+![roomInterface](./pics/roomInterface.png)
 
 enter the room name and your nickname to join that room
 
-![firstPerson](./pics/roomInterface.png)
+![firstPerson](./pics/firstPerson.png)
 ![secondPersonEnteredSameRoom](./pics/secondPersonEnteredSameRoom.png)
 
 
